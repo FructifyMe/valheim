@@ -1,280 +1,274 @@
-import React, { useState } from 'react';
-import { 
-  Sword, 
-  Wind, 
-  Cloud, 
-  Clock, 
-  Box, 
-  Hammer, 
-  Map, 
-  Dog, 
-  Flame, 
-  Settings, 
-  Users, 
-  ArrowRightLeft,
-  Filter,
-  Info,
-  Package,
-  Cpu,
-  Gamepad
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valheim Server Features</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #18181b; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #52525b; }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen pb-20 selection:bg-orange-900 selection:text-white">
 
-const FeatureCard = ({ title, icon: Icon, items, color = "emerald" }) => (
-  <div className={`bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-${color}-500 transition-colors duration-300`}>
-    <div className="flex items-center gap-3 mb-4">
-      <div className={`p-2 rounded-md bg-${color}-900/30 text-${color}-400`}>
-        <Icon size={24} />
-      </div>
-      <h3 className="text-xl font-bold text-zinc-100">{title}</h3>
+    <!-- Hero Header -->
+    <div class="relative bg-zinc-900 border-b border-zinc-800">
+        <div class="absolute inset-0 bg-gradient-to-b from-orange-900/10 to-zinc-900/5 pointer-events-none"></div>
+        <div class="max-w-6xl mx-auto px-6 py-12 md:py-20 relative z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-orange-500 drop-shadow-sm">
+                Server Features
+            </h1>
+            <p class="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto">
+                A comprehensive guide to the mods running on our dedicated server.
+            </p>
+        </div>
     </div>
-    <ul className="space-y-2">
-      {items.map((item, idx) => (
-        <li key={idx} className="flex items-start gap-2 text-zinc-300 text-sm">
-          <div className={`mt-1.5 w-1.5 h-1.5 rounded-full bg-${color}-500 flex-shrink-0`} />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
 
-const Badge = ({ children, color = "blue" }) => (
-  <span className={`px-2 py-0.5 rounded text-xs font-semibold bg-${color}-900/50 text-${color}-300 border border-${color}-700/50`}>
-    {children}
-  </span>
-);
-
-export default function App() {
-  const [activeTab, setActiveTab] = useState('ui');
-
-  const uiFeatures = [
-    {
-      title: "HUD Enhancements",
-      icon: Clock,
-      color: "amber",
-      items: [
-        "In-game Clock: Moveable, shows time/day",
-        "Weather Forecast: Tracks rain, mist, storms below minimap",
-        "Wind Forecast: Shows next 5 wind directions",
-        "Weight & Slots: Bar above food slots showing load"
-      ]
-    },
-    {
-      title: "Crafting & Items",
-      icon: Hammer,
-      color: "orange",
-      items: [
-        "Multicraft support (Gamepad & Mouse)",
-        "Crafting list filters & sorting",
-        "Resource requirement counts in inventory",
-        "Colored durability bars",
-        "Quick repair: Hold 'Use' to repair all"
-      ]
-    },
-    {
-      title: "Smart Tooltips",
-      icon: Info,
-      color: "blue",
-      items: [
-        "Fermenter: Time remaining, percent done",
-        "Plants: Time to full growth",
-        "Smelters/Kilns: Queue info & time to finish",
-        "Tames: Growth time, hunger status",
-        "Combined Armor & Status Effect stats"
-      ]
-    },
-    {
-      title: "Storage Management",
-      icon: Box,
-      color: "emerald",
-      items: [
-        "Custom Chest Names",
-        "Show chest contents on hover",
-        "Toggle free slots vs item count",
-        "Fast filtering in chests"
-      ]
-    }
-  ];
-
-  const serverFeatures = [
-    {
-      title: "World & Travel",
-      icon: Map,
-      color: "purple",
-      items: [
-        "Auto-generated Portal Hub connecting all portals",
-        "Map Pins for Portals and Ships (Auto-updating)",
-        "Unlock Traders (removes progression lock)",
-        "Mist removal in Mistlands (Configurable)"
-      ]
-    },
-    {
-      title: "Base Automation",
-      icon: Cpu,
-      color: "cyan",
-      items: [
-        "Auto-sort inventories into nearby containers",
-        "Auto-pickup dropped items into chests",
-        "Smelters/Kilns pull fuel/ore from nearby chests",
-        "Crafting Stations: Extended range & wireless extensions",
-        "Doors auto-close after use"
-      ]
-    },
-    {
-      title: "Tames & Creatures",
-      icon: Dog,
-      color: "rose",
-      items: [
-        "Commandable Tames (Like wolves)",
-        "Teleport following tames with you",
-        "Tames are always fed (Never hungry)",
-        "Show taming/growing progress to nearby players",
-        "Ballistas ignore players/tames"
-      ]
-    },
-    {
-      title: "Quality of Life",
-      icon: Flame,
-      color: "amber",
-      items: [
-        "Infinite Fuel for fireplaces/torches",
-        "Torches/Fires ignore rain",
-        "Infinite Stamina (Building/Farming modes)",
-        "Assignable ownership for interactables (Crossplay fix)",
-        "In-world config room for Admins"
-      ]
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-orange-900 selection:text-white pb-20">
-      {/* Hero Header */}
-      <div className="relative bg-zinc-900 border-b border-zinc-800">
-        <div className="absolute inset-0 bg-gradient-to-b from-orange-900/10 to-zinc-900/5 pointer-events-none" />
-        <div className="max-w-6xl mx-auto px-6 py-12 md:py-20 relative z-10 text-center">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-orange-500 drop-shadow-sm font-serif">
-            Server Features
-          </h1>
-          <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto">
-            A comprehensive guide to the mods running on our dedicated server.
-          </p>
+    <!-- Navigation Tabs -->
+    <div class="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800">
+        <div class="max-w-4xl mx-auto flex p-2 gap-2">
+            <button onclick="switchTab('ui')" id="tab-btn-ui" class="flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 font-bold bg-orange-600 text-white shadow-lg shadow-orange-900/20">
+                <i data-lucide="filter" class="w-5 h-5"></i>
+                <span>My Little UI</span>
+            </button>
+            <button onclick="switchTab('server')" id="tab-btn-server" class="flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 font-bold text-zinc-400 hover:text-white hover:bg-zinc-800">
+                <i data-lucide="users" class="w-5 h-5"></i>
+                <span>Serverside QoL</span>
+            </button>
         </div>
-      </div>
+    </div>
 
-      {/* Navigation Tabs */}
-      <div className="sticky top-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800">
-        <div className="max-w-4xl mx-auto flex p-2">
-          <button
-            onClick={() => setActiveTab('ui')}
-            className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 ${
-              activeTab === 'ui' 
-                ? 'bg-orange-600 text-white shadow-lg shadow-orange-900/20' 
-                : 'text-zinc-400 hover:text-white hover:bg-zinc-800'
-            }`}
-          >
-            <Filter size={20} />
-            <span className="font-bold">My Little UI</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('server')}
-            className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 ${
-              activeTab === 'server' 
-                ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/20' 
-                : 'text-zinc-400 hover:text-white hover:bg-zinc-800'
-            }`}
-          >
-            <Users size={20} />
-            <span className="font-bold">Serverside QoL</span>
-          </button>
+    <!-- Main Content Area -->
+    <div class="max-w-6xl mx-auto px-6 py-12">
+
+        <!-- UI Content -->
+        <div id="content-ui" class="fade-in block">
+            <!-- Header Section -->
+            <div class="flex flex-col md:flex-row items-center gap-8 mb-12 bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800">
+                <img src="https://staticdelivery.nexusmods.com/mods/3667/images/headers/2562_1711322538.jpg" alt="My Little UI" class="rounded-lg shadow-xl w-full md:w-1/3 object-cover border border-zinc-700">
+                <div class="flex-1">
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <h2 class="text-3xl font-bold text-orange-400">My Little UI</h2>
+                        <span class="px-2 py-0.5 rounded text-xs font-semibold bg-green-900/50 text-green-300 border border-green-700/50">Client Side</span>
+                        <span class="px-2 py-0.5 rounded text-xs font-semibold bg-blue-900/50 text-blue-300 border border-blue-700/50">Server Synced</span>
+                    </div>
+                    <p class="text-zinc-300 leading-relaxed mb-4">
+                        A collection of quality-of-life interface tweaks designed to give you more information without cluttering your screen. Includes comprehensive tooltips, weather forecasts, and inventory management tools.
+                    </p>
+                    <div class="p-4 bg-zinc-950/50 rounded border border-zinc-800 text-sm text-zinc-400 flex items-start gap-2">
+                        <i data-lucide="settings" class="w-4 h-4 mt-1 flex-shrink-0"></i>
+                        <span><strong>Note:</strong> Most config values are synchronized with the server. You can tweak visual preferences using <em>Configuration Manager</em> (F1).</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UI Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-amber-500 transition-colors duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 rounded-md bg-amber-900/30 text-amber-400"><i data-lucide="clock"></i></div>
+                        <h3 class="text-xl font-bold text-zinc-100">HUD Enhancements</h3>
+                    </div>
+                    <ul class="space-y-2 text-zinc-300 text-sm">
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>In-game Clock: Moveable, shows time/day</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>Weather Forecast: Tracks rain, mist, storms</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>Wind Forecast: Shows next 5 wind directions</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>Weight & Slots: Bar above food slots</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-orange-500 transition-colors duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 rounded-md bg-orange-900/30 text-orange-400"><i data-lucide="hammer"></i></div>
+                        <h3 class="text-xl font-bold text-zinc-100">Crafting & Items</h3>
+                    </div>
+                    <ul class="space-y-2 text-zinc-300 text-sm">
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></div>Multicraft support (Gamepad & Mouse)</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></div>Crafting list filters & sorting</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></div>Resource requirement counts in inventory</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></div>Colored durability bars</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></div>Quick repair: Hold 'Use' to repair all</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-blue-500 transition-colors duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 rounded-md bg-blue-900/30 text-blue-400"><i data-lucide="info"></i></div>
+                        <h3 class="text-xl font-bold text-zinc-100">Smart Tooltips</h3>
+                    </div>
+                    <ul class="space-y-2 text-zinc-300 text-sm">
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></div>Fermenter: Time remaining, percent done</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></div>Plants: Time to full growth</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></div>Smelters/Kilns: Queue info & time to finish</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></div>Tames: Growth time, hunger status</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></div>Combined Armor & Status Effect stats</li>
+                    </ul>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-emerald-500 transition-colors duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 rounded-md bg-emerald-900/30 text-emerald-400"><i data-lucide="box"></i></div>
+                        <h3 class="text-xl font-bold text-zinc-100">Storage Management</h3>
+                    </div>
+                    <ul class="space-y-2 text-zinc-300 text-sm">
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></div>Custom Chest Names</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></div>Show chest contents on hover</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></div>Toggle free slots vs item count</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></div>Fast filtering in chests</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
 
-      {/* Content Area */}
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        {activeTab === 'ui' ? (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="flex flex-col md:flex-row items-center gap-8 mb-12 bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800">
-              <img 
-                src="https://staticdelivery.nexusmods.com/mods/3667/images/headers/2562_1711322538.jpg" 
-                alt="My Little UI Logo" 
-                className="rounded-lg shadow-xl w-full md:w-1/3 object-cover border border-zinc-700"
-              />
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-4">
-                  <h2 className="text-3xl font-bold text-orange-400">My Little UI</h2>
-                  <Badge color="green">Client Side</Badge>
-                  <Badge color="blue">Server Synced</Badge>
+        <!-- Server Content -->
+        <div id="content-server" class="hidden">
+            <!-- Header Section -->
+            <div class="mb-12 bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <h2 class="text-3xl font-bold text-purple-400">Serverside QoL</h2>
+                            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-purple-900/50 text-purple-300 border border-purple-700/50">Server Only</span>
+                        </div>
+                        <p class="text-zinc-400">Powerful backend tweaks that run entirely on the server.</p>
+                    </div>
+                    <div class="flex items-center gap-2 bg-emerald-900/20 px-4 py-2 rounded-lg border border-emerald-900/50">
+                        <i data-lucide="gamepad-2" class="text-emerald-400 w-5 h-5"></i>
+                        <span class="text-emerald-200 font-medium text-sm">Xbox & Vanilla Compatible</span>
+                    </div>
                 </div>
-                <p className="text-zinc-300 leading-relaxed mb-4">
-                  A collection of quality-of-life interface tweaks designed to give you more information 
-                  without cluttering your screen. Includes comprehensive tooltips, weather forecasts, 
-                  and inventory management tools.
-                </p>
-                <div className="p-4 bg-zinc-950/50 rounded border border-zinc-800 text-sm text-zinc-400 flex items-start gap-2">
-                  <Settings size={16} className="mt-1 flex-shrink-0" />
-                  <span>
-                    <strong>Note:</strong> Most config values are synchronized with the server settings. 
-                    You can tweak visual preferences using <em>Configuration Manager</em> (F1).
-                  </span>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div class="bg-zinc-950/50 p-4 rounded border border-zinc-800">
+                        <strong class="text-zinc-200 block mb-1">Crossplay Friendly</strong>
+                        <span class="text-zinc-400">Designed for dedicated servers with mixed PC/Xbox players.</span>
+                    </div>
+                    <div class="bg-zinc-950/50 p-4 rounded border border-zinc-800">
+                        <strong class="text-zinc-200 block mb-1">Performance</strong>
+                        <span class="text-zinc-400">Fixes ownership issues for smelters/cooking on bad connections.</span>
+                    </div>
+                    <div class="bg-zinc-950/50 p-4 rounded border border-zinc-800">
+                        <strong class="text-zinc-200 block mb-1">Admin Room</strong>
+                        <span class="text-zinc-400">Includes an in-game room for admins to toggle features via signs.</span>
+                    </div>
                 </div>
-              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {uiFeatures.map((feature, idx) => (
-                <FeatureCard key={idx} {...feature} />
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="mb-12 bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <h2 className="text-3xl font-bold text-purple-400">Serverside QoL</h2>
-                    <Badge color="purple">Server Only</Badge>
-                  </div>
-                  <p className="text-zinc-400">
-                    Powerful backend tweaks that run entirely on the server.
-                  </p>
+            <!-- Server Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-purple-500 transition-colors duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 rounded-md bg-purple-900/30 text-purple-400"><i data-lucide="map"></i></div>
+                        <h3 class="text-xl font-bold text-zinc-100">World & Travel</h3>
+                    </div>
+                    <ul class="space-y-2 text-zinc-300 text-sm">
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0"></div>Auto-generated Portal Hub</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0"></div>Map Pins for Portals and Ships (Auto-updating)</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0"></div>Unlock Traders (removes progression lock)</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0"></div>Mist removal in Mistlands (Configurable)</li>
+                    </ul>
                 </div>
-                <div className="flex items-center gap-2 bg-emerald-900/20 px-4 py-2 rounded-lg border border-emerald-900/50">
-                  <Gamepad size={20} className="text-emerald-400" />
-                  <span className="text-emerald-200 font-medium">Xbox & Vanilla Compatible</span>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                <div className="bg-zinc-950/50 p-4 rounded border border-zinc-800">
-                  <strong className="text-zinc-200 block mb-1">Crossplay Friendly</strong>
-                  <span className="text-zinc-400">Designed for dedicated servers with mixed PC/Xbox players.</span>
-                </div>
-                <div className="bg-zinc-950/50 p-4 rounded border border-zinc-800">
-                  <strong className="text-zinc-200 block mb-1">Performance</strong>
-                  <span className="text-zinc-400">Fixes ownership issues for smelters/cooking on bad connections.</span>
-                </div>
-                <div className="bg-zinc-950/50 p-4 rounded border border-zinc-800">
-                  <strong className="text-zinc-200 block mb-1">Admin Room</strong>
-                  <span className="text-zinc-400">Includes an in-game room for admins to toggle features via signs.</span>
-                </div>
-              </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {serverFeatures.map((feature, idx) => (
-                <FeatureCard key={idx} {...feature} />
-              ))}
+                <!-- Card 2 -->
+                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-cyan-500 transition-colors duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 rounded-md bg-cyan-900/30 text-cyan-400"><i data-lucide="cpu"></i></div>
+                        <h3 class="text-xl font-bold text-zinc-100">Base Automation</h3>
+                    </div>
+                    <ul class="space-y-2 text-zinc-300 text-sm">
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></div>Auto-sort inventories into nearby containers</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></div>Auto-pickup dropped items into chests</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></div>Smelters/Kilns pull fuel/ore from nearby chests</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></div>Crafting Stations: Extended range & extensions</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></div>Doors auto-close after use</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-rose-500 transition-colors duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 rounded-md bg-rose-900/30 text-rose-400"><i data-lucide="dog"></i></div>
+                        <h3 class="text-xl font-bold text-zinc-100">Tames & Creatures</h3>
+                    </div>
+                    <ul class="space-y-2 text-zinc-300 text-sm">
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-500 flex-shrink-0"></div>Commandable Tames (Like wolves)</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-500 flex-shrink-0"></div>Teleport following tames with you</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-500 flex-shrink-0"></div>Tames are always fed (Never hungry)</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-500 flex-shrink-0"></div>Show taming/growing progress to nearby players</li>
+                    </ul>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-amber-500 transition-colors duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 rounded-md bg-amber-900/30 text-amber-400"><i data-lucide="flame"></i></div>
+                        <h3 class="text-xl font-bold text-zinc-100">Quality of Life</h3>
+                    </div>
+                    <ul class="space-y-2 text-zinc-300 text-sm">
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>Infinite Fuel for fireplaces/torches</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>Torches/Fires ignore rain</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>Infinite Stamina (Building/Farming modes)</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>Assignable ownership for interactables</li>
+                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>In-world config room for Admins</li>
+                    </ul>
+                </div>
             </div>
             
-            <div className="mt-8 text-center">
-                <p className="text-zinc-500 text-sm">
+            <div class="mt-8 text-center">
+                <p class="text-zinc-500 text-sm">
                     * Features marked here are available but depend on the server admin's specific configuration.
                 </p>
             </div>
-          </div>
-        )}
-      </div>
+        </div>
     </div>
-  );
-}
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Tab Switching Logic
+        function switchTab(tab) {
+            const uiContent = document.getElementById('content-ui');
+            const serverContent = document.getElementById('content-server');
+            const uiBtn = document.getElementById('tab-btn-ui');
+            const serverBtn = document.getElementById('tab-btn-server');
+
+            if (tab === 'ui') {
+                uiContent.classList.remove('hidden');
+                uiContent.classList.add('fade-in');
+                serverContent.classList.add('hidden');
+                
+                // Active Styles
+                uiBtn.className = "flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 font-bold bg-orange-600 text-white shadow-lg shadow-orange-900/20";
+                serverBtn.className = "flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 font-bold text-zinc-400 hover:text-white hover:bg-zinc-800";
+            } else {
+                serverContent.classList.remove('hidden');
+                serverContent.classList.add('fade-in');
+                uiContent.classList.add('hidden');
+
+                // Active Styles
+                serverBtn.className = "flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 font-bold bg-purple-600 text-white shadow-lg shadow-purple-900/20";
+                uiBtn.className = "flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 font-bold text-zinc-400 hover:text-white hover:bg-zinc-800";
+            }
+        }
+    </script>
+</body>
+</html>
