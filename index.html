@@ -1,0 +1,280 @@
+import React, { useState } from 'react';
+import { 
+  Sword, 
+  Wind, 
+  Cloud, 
+  Clock, 
+  Box, 
+  Hammer, 
+  Map, 
+  Dog, 
+  Flame, 
+  Settings, 
+  Users, 
+  ArrowRightLeft,
+  Filter,
+  Info,
+  Package,
+  Cpu,
+  Gamepad
+} from 'lucide-react';
+
+const FeatureCard = ({ title, icon: Icon, items, color = "emerald" }) => (
+  <div className={`bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-${color}-500 transition-colors duration-300`}>
+    <div className="flex items-center gap-3 mb-4">
+      <div className={`p-2 rounded-md bg-${color}-900/30 text-${color}-400`}>
+        <Icon size={24} />
+      </div>
+      <h3 className="text-xl font-bold text-zinc-100">{title}</h3>
+    </div>
+    <ul className="space-y-2">
+      {items.map((item, idx) => (
+        <li key={idx} className="flex items-start gap-2 text-zinc-300 text-sm">
+          <div className={`mt-1.5 w-1.5 h-1.5 rounded-full bg-${color}-500 flex-shrink-0`} />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const Badge = ({ children, color = "blue" }) => (
+  <span className={`px-2 py-0.5 rounded text-xs font-semibold bg-${color}-900/50 text-${color}-300 border border-${color}-700/50`}>
+    {children}
+  </span>
+);
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState('ui');
+
+  const uiFeatures = [
+    {
+      title: "HUD Enhancements",
+      icon: Clock,
+      color: "amber",
+      items: [
+        "In-game Clock: Moveable, shows time/day",
+        "Weather Forecast: Tracks rain, mist, storms below minimap",
+        "Wind Forecast: Shows next 5 wind directions",
+        "Weight & Slots: Bar above food slots showing load"
+      ]
+    },
+    {
+      title: "Crafting & Items",
+      icon: Hammer,
+      color: "orange",
+      items: [
+        "Multicraft support (Gamepad & Mouse)",
+        "Crafting list filters & sorting",
+        "Resource requirement counts in inventory",
+        "Colored durability bars",
+        "Quick repair: Hold 'Use' to repair all"
+      ]
+    },
+    {
+      title: "Smart Tooltips",
+      icon: Info,
+      color: "blue",
+      items: [
+        "Fermenter: Time remaining, percent done",
+        "Plants: Time to full growth",
+        "Smelters/Kilns: Queue info & time to finish",
+        "Tames: Growth time, hunger status",
+        "Combined Armor & Status Effect stats"
+      ]
+    },
+    {
+      title: "Storage Management",
+      icon: Box,
+      color: "emerald",
+      items: [
+        "Custom Chest Names",
+        "Show chest contents on hover",
+        "Toggle free slots vs item count",
+        "Fast filtering in chests"
+      ]
+    }
+  ];
+
+  const serverFeatures = [
+    {
+      title: "World & Travel",
+      icon: Map,
+      color: "purple",
+      items: [
+        "Auto-generated Portal Hub connecting all portals",
+        "Map Pins for Portals and Ships (Auto-updating)",
+        "Unlock Traders (removes progression lock)",
+        "Mist removal in Mistlands (Configurable)"
+      ]
+    },
+    {
+      title: "Base Automation",
+      icon: Cpu,
+      color: "cyan",
+      items: [
+        "Auto-sort inventories into nearby containers",
+        "Auto-pickup dropped items into chests",
+        "Smelters/Kilns pull fuel/ore from nearby chests",
+        "Crafting Stations: Extended range & wireless extensions",
+        "Doors auto-close after use"
+      ]
+    },
+    {
+      title: "Tames & Creatures",
+      icon: Dog,
+      color: "rose",
+      items: [
+        "Commandable Tames (Like wolves)",
+        "Teleport following tames with you",
+        "Tames are always fed (Never hungry)",
+        "Show taming/growing progress to nearby players",
+        "Ballistas ignore players/tames"
+      ]
+    },
+    {
+      title: "Quality of Life",
+      icon: Flame,
+      color: "amber",
+      items: [
+        "Infinite Fuel for fireplaces/torches",
+        "Torches/Fires ignore rain",
+        "Infinite Stamina (Building/Farming modes)",
+        "Assignable ownership for interactables (Crossplay fix)",
+        "In-world config room for Admins"
+      ]
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-orange-900 selection:text-white pb-20">
+      {/* Hero Header */}
+      <div className="relative bg-zinc-900 border-b border-zinc-800">
+        <div className="absolute inset-0 bg-gradient-to-b from-orange-900/10 to-zinc-900/5 pointer-events-none" />
+        <div className="max-w-6xl mx-auto px-6 py-12 md:py-20 relative z-10 text-center">
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-orange-500 drop-shadow-sm font-serif">
+            Server Features
+          </h1>
+          <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto">
+            A comprehensive guide to the mods running on our dedicated server.
+          </p>
+        </div>
+      </div>
+
+      {/* Navigation Tabs */}
+      <div className="sticky top-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800">
+        <div className="max-w-4xl mx-auto flex p-2">
+          <button
+            onClick={() => setActiveTab('ui')}
+            className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 ${
+              activeTab === 'ui' 
+                ? 'bg-orange-600 text-white shadow-lg shadow-orange-900/20' 
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-800'
+            }`}
+          >
+            <Filter size={20} />
+            <span className="font-bold">My Little UI</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('server')}
+            className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 ${
+              activeTab === 'server' 
+                ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/20' 
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-800'
+            }`}
+          >
+            <Users size={20} />
+            <span className="font-bold">Serverside QoL</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Content Area */}
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        {activeTab === 'ui' ? (
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="flex flex-col md:flex-row items-center gap-8 mb-12 bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800">
+              <img 
+                src="https://staticdelivery.nexusmods.com/mods/3667/images/headers/2562_1711322538.jpg" 
+                alt="My Little UI Logo" 
+                className="rounded-lg shadow-xl w-full md:w-1/3 object-cover border border-zinc-700"
+              />
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <h2 className="text-3xl font-bold text-orange-400">My Little UI</h2>
+                  <Badge color="green">Client Side</Badge>
+                  <Badge color="blue">Server Synced</Badge>
+                </div>
+                <p className="text-zinc-300 leading-relaxed mb-4">
+                  A collection of quality-of-life interface tweaks designed to give you more information 
+                  without cluttering your screen. Includes comprehensive tooltips, weather forecasts, 
+                  and inventory management tools.
+                </p>
+                <div className="p-4 bg-zinc-950/50 rounded border border-zinc-800 text-sm text-zinc-400 flex items-start gap-2">
+                  <Settings size={16} className="mt-1 flex-shrink-0" />
+                  <span>
+                    <strong>Note:</strong> Most config values are synchronized with the server settings. 
+                    You can tweak visual preferences using <em>Configuration Manager</em> (F1).
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {uiFeatures.map((feature, idx) => (
+                <FeatureCard key={idx} {...feature} />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="mb-12 bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <h2 className="text-3xl font-bold text-purple-400">Serverside QoL</h2>
+                    <Badge color="purple">Server Only</Badge>
+                  </div>
+                  <p className="text-zinc-400">
+                    Powerful backend tweaks that run entirely on the server.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 bg-emerald-900/20 px-4 py-2 rounded-lg border border-emerald-900/50">
+                  <Gamepad size={20} className="text-emerald-400" />
+                  <span className="text-emerald-200 font-medium">Xbox & Vanilla Compatible</span>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div className="bg-zinc-950/50 p-4 rounded border border-zinc-800">
+                  <strong className="text-zinc-200 block mb-1">Crossplay Friendly</strong>
+                  <span className="text-zinc-400">Designed for dedicated servers with mixed PC/Xbox players.</span>
+                </div>
+                <div className="bg-zinc-950/50 p-4 rounded border border-zinc-800">
+                  <strong className="text-zinc-200 block mb-1">Performance</strong>
+                  <span className="text-zinc-400">Fixes ownership issues for smelters/cooking on bad connections.</span>
+                </div>
+                <div className="bg-zinc-950/50 p-4 rounded border border-zinc-800">
+                  <strong className="text-zinc-200 block mb-1">Admin Room</strong>
+                  <span className="text-zinc-400">Includes an in-game room for admins to toggle features via signs.</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {serverFeatures.map((feature, idx) => (
+                <FeatureCard key={idx} {...feature} />
+              ))}
+            </div>
+            
+            <div className="mt-8 text-center">
+                <p className="text-zinc-500 text-sm">
+                    * Features marked here are available but depend on the server admin's specific configuration.
+                </p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
