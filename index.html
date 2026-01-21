@@ -1,306 +1,243 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farls' Valheim Server</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .fade-in { animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+import React, { useState } from 'react';
+import { Copy, Check, Map, Flame, Box, Shield, Server, Info, Terminal, Anchor, Key, Zap, PawPrint, Ship, MoreHorizontal, Eye } from 'lucide-react';
+
+const ValheimServerPage = () => {
+  const [copiedIP, setCopiedIP] = useState(false);
+  const [copiedPW, setCopiedPW] = useState(false);
+  const ipAddress = "198.73.57.143:27029";
+  const password = "Patriots";
+
+  const handleCopyIP = () => {
+    navigator.clipboard.writeText(ipAddress);
+    setCopiedIP(true);
+    setTimeout(() => setCopiedIP(false), 2000);
+  };
+
+  const handleCopyPW = () => {
+    navigator.clipboard.writeText(password);
+    setCopiedPW(true);
+    setTimeout(() => setCopiedPW(false), 2000);
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-amber-900 selection:text-amber-100">
+      {/* Background Texture Overlay (Subtle noise/grain) */}
+      <div className="fixed inset-0 opacity-5 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/dark-leather.png')]"></div>
+
+      {/* Main Content Container */}
+      <div className="relative max-w-5xl mx-auto px-6 py-12 md:py-20 flex flex-col items-center">
         
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #18181b; }
-        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #52525b; }
-    </style>
-</head>
-<body class="bg-zinc-950 text-zinc-100 min-h-screen pb-20 selection:bg-orange-900 selection:text-white">
-
-    <!-- Hero Header -->
-    <div class="relative bg-zinc-900 border-b border-zinc-800">
-        <div class="absolute inset-0 bg-gradient-to-b from-orange-900/10 to-zinc-900/5 pointer-events-none"></div>
-        <div class="max-w-6xl mx-auto px-6 py-12 md:py-20 relative z-10 text-center">
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-orange-500 drop-shadow-sm">
-                Farls' Valheim Server
-            </h1>
-            <p class="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-8">
-                A comprehensive guide to the mods running on our dedicated server.
-            </p>
-
-            <!-- Server IP Badge -->
-            <div class="inline-flex items-center gap-3 bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 rounded-full px-6 py-3 transition-colors cursor-pointer group select-none" onclick="copyIP()">
-                <div class="relative flex h-3 w-3">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                </div>
-                <span class="font-mono text-zinc-300 group-hover:text-white transition-colors">198.73.57.143:27029</span>
-                <i data-lucide="copy" class="w-4 h-4 text-zinc-500 group-hover:text-zinc-300 ml-1"></i>
-            </div>
-            
-            <!-- Toast Notification -->
-            <div id="copy-toast" class="fixed top-6 left-1/2 -translate-x-1/2 bg-zinc-800 border border-zinc-700 text-white px-6 py-3 rounded-full shadow-2xl transform -translate-y-32 transition-all duration-300 z-50 font-medium opacity-0 flex items-center gap-2 pointer-events-none">
-                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
-                IP Copied to Clipboard!
-            </div>
+        {/* Header / Hero Section */}
+        <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <div className="flex justify-center mb-4">
+             <Shield className="w-16 h-16 text-amber-600" strokeWidth={1.5} />
+          </div>
+          <h1 className="text-5xl md:text-6xl font-serif font-bold tracking-tight text-slate-100 mb-4 drop-shadow-lg">
+            Farls' <span className="text-amber-600">Valheim</span> Server
+          </h1>
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+            A dedicated world for our group. Enhanced with server-side magic.
+          </p>
         </div>
+
+        {/* Connection Card */}
+        <div className="w-full max-w-3xl bg-slate-900/80 backdrop-blur-sm border border-slate-700 rounded-xl p-8 mb-16 shadow-2xl relative overflow-hidden group">
+          {/* Glowing accent border */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-600 to-transparent opacity-50"></div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* IP Section */}
+            <div className="flex flex-col gap-4">
+              <div className="text-left">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-1 flex items-center gap-2">
+                  <Server size={14} /> Server Address
+                </h3>
+                <div className="bg-slate-950/50 border border-slate-800 rounded-lg p-4 flex items-center justify-between group-hover:border-slate-600 transition-colors">
+                  <code className="text-xl font-mono text-amber-500 font-bold tracking-wide truncate mr-4">
+                    {ipAddress}
+                  </code>
+                  <button 
+                    onClick={handleCopyIP}
+                    className="p-2 hover:bg-slate-800 rounded-md transition-colors text-slate-400 hover:text-white"
+                    title="Copy IP"
+                  >
+                    {copiedIP ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Password Section */}
+            <div className="flex flex-col gap-4">
+               <div className="text-left">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-1 flex items-center gap-2">
+                  <Key size={14} /> Password
+                </h3>
+                <div className="bg-slate-950/50 border border-slate-800 rounded-lg p-4 flex items-center justify-between group-hover:border-slate-600 transition-colors">
+                  <code className="text-xl font-mono text-amber-500 font-bold tracking-wide truncate mr-4">
+                    {password}
+                  </code>
+                  <button 
+                    onClick={handleCopyPW}
+                    className="p-2 hover:bg-slate-800 rounded-md transition-colors text-slate-400 hover:text-white"
+                    title="Copy Password"
+                  >
+                    {copiedPW ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 flex items-center justify-center gap-2 text-sm text-slate-400 bg-slate-800/30 p-3 rounded-md border border-slate-700/50">
+            <Info size={16} />
+            <span>Click "Join IP" in the Valheim server browser to connect directly.</span>
+          </div>
+        </div>
+
+        {/* The "Zero Install" Banner */}
+        <div className="w-full max-w-4xl mb-16">
+          <div className="bg-gradient-to-r from-slate-900 to-slate-800 border-l-4 border-amber-500 rounded-r-lg p-6 shadow-lg flex flex-col md:flex-row items-center gap-6">
+            <div className="bg-amber-500/10 p-4 rounded-full">
+              <Zap className="w-8 h-8 text-amber-500" />
+            </div>
+            <div className="text-center md:text-left flex-1">
+              <h2 className="text-2xl font-bold text-slate-100 mb-2">Zero Installation Required</h2>
+              <p className="text-slate-300 leading-relaxed">
+                This server runs <strong>ServersideQoL</strong>. All mods are handled by the server. 
+                You can join with a completely vanilla game client (Steam, Xbox, Gamepass). 
+                <span className="text-amber-400 font-bold block mt-1"> No downloads needed. Just join and play.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Features Grid */}
+        <div className="w-full max-w-4xl">
+          <h3 className="text-2xl font-serif font-bold text-center mb-8 text-slate-300 flex items-center justify-center gap-3">
+            <span className="h-px w-12 bg-slate-700"></span>
+            Quality of Life Features
+            <span className="h-px w-12 bg-slate-700"></span>
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            {/* Feature 1: Auto Sort */}
+            <div className="bg-slate-900 border border-slate-800 p-6 rounded-lg hover:border-slate-600 transition-colors">
+              <div className="flex items-start gap-4">
+                <div className="bg-blue-900/20 p-3 rounded-lg text-blue-400">
+                  <Box size={24} />
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold text-slate-200 mb-2">Smart Containers</h4>
+                  <ul className="text-slate-400 text-sm list-disc pl-4 space-y-1">
+                    <li>Chests sort automatically with one click.</li>
+                    <li><strong>Auto-Pickup:</strong> Items dropped on the floor near chests will automatically stack into them.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 2: Smelter Automation */}
+            <div className="bg-slate-900 border border-slate-800 p-6 rounded-lg hover:border-slate-600 transition-colors">
+              <div className="flex items-start gap-4">
+                <div className="bg-red-900/20 p-3 rounded-lg text-red-400">
+                  <Zap size={24} />
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold text-slate-200 mb-2">Smelter Automation</h4>
+                  <p className="text-slate-400 text-sm leading-relaxed">
+                    Smelters and Kilns will automatically pull Coal and Ore from nearby chests. No more spamming 'E' to load 10 copper ore!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 3: Map Sync */}
+            <div className="bg-slate-900 border border-slate-800 p-6 rounded-lg hover:border-slate-600 transition-colors">
+              <div className="flex items-start gap-4">
+                <div className="bg-emerald-900/20 p-3 rounded-lg text-emerald-400">
+                  <Map size={24} />
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold text-slate-200 mb-2">Map & Portal Sync</h4>
+                  <ul className="text-slate-400 text-sm list-disc pl-4 space-y-1">
+                    <li>Building a portal adds a pin to the Cartography Table.</li>
+                    <li><strong>Ship Tracking:</strong> Longships and Karves update their position on the map table automatically.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 4: Eternal Fire */}
+            <div className="bg-slate-900 border border-slate-800 p-6 rounded-lg hover:border-slate-600 transition-colors">
+              <div className="flex items-start gap-4">
+                <div className="bg-orange-900/20 p-3 rounded-lg text-orange-400">
+                  <Flame size={24} />
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold text-slate-200 mb-2">Eternal Fire</h4>
+                  <ul className="text-slate-400 text-sm list-disc pl-4 space-y-1">
+                    <li>Torches, sconces, and campfires have infinite fuel.</li>
+                    <li>Campfires ignore rain damage (stays lit in storms).</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+             {/* Feature 5: Commandable Tames */}
+             <div className="bg-slate-900 border border-slate-800 p-6 rounded-lg hover:border-slate-600 transition-colors">
+              <div className="flex items-start gap-4">
+                <div className="bg-amber-900/20 p-3 rounded-lg text-amber-400">
+                  <PawPrint size={24} />
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold text-slate-200 mb-2">Better Taming</h4>
+                  <ul className="text-slate-400 text-sm list-disc pl-4 space-y-1">
+                    <li>Boars and Lox can be commanded to "Follow" or "Stay."</li>
+                    <li><strong>Live Progress:</strong> See exact % progress for Taming and Baby Growth floating above the creature.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 6: Admin Tools / Clock */}
+            <div className="bg-slate-900 border border-slate-800 p-6 rounded-lg hover:border-slate-600 transition-colors">
+              <div className="flex items-start gap-4">
+                <div className="bg-purple-900/20 p-3 rounded-lg text-purple-400">
+                  <Terminal size={24} />
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold text-slate-200 mb-2">Real-Time Clock</h4>
+                  <p className="text-slate-400 text-sm leading-relaxed">
+                    Write a clock emoji (🕛) on any wooden sign, and it will update in real-time to show the actual in-game time of day.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          
+          {/* Footer Note about extra features */}
+          <div className="mt-8 flex justify-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/50 border border-slate-800 text-slate-400 text-sm">
+                <MoreHorizontal size={16} />
+                <span>Plus many more hidden QoL tweaks enabled server-side.</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-20 text-center text-slate-600 text-sm">
+          <div className="flex justify-center gap-4 mb-4">
+             <Anchor size={20} className="hover:text-amber-600 transition-colors cursor-pointer" />
+          </div>
+          <p>Ready for the Ashlands? Skål!</p>
+        </div>
+
+      </div>
     </div>
+  );
+};
 
-    <!-- Navigation Tabs -->
-    <div class="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800">
-        <div class="max-w-4xl mx-auto flex p-2 gap-2">
-            <button onclick="switchTab('ui')" id="tab-btn-ui" class="flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 font-bold bg-orange-600 text-white shadow-lg shadow-orange-900/20">
-                <i data-lucide="filter" class="w-5 h-5"></i>
-                <span>My Little UI</span>
-            </button>
-            <button onclick="switchTab('server')" id="tab-btn-server" class="flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 font-bold text-zinc-400 hover:text-white hover:bg-zinc-800">
-                <i data-lucide="users" class="w-5 h-5"></i>
-                <span>Serverside QoL</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- Main Content Area -->
-    <div class="max-w-6xl mx-auto px-6 py-12">
-
-        <!-- UI Content -->
-        <div id="content-ui" class="fade-in block">
-            <!-- Header Section -->
-            <div class="flex flex-col md:flex-row items-center gap-8 mb-12 bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800">
-                <img src="https://staticdelivery.nexusmods.com/mods/3667/images/headers/2562_1711322538.jpg" alt="My Little UI" class="rounded-lg shadow-xl w-full md:w-1/3 object-cover border border-zinc-700">
-                <div class="flex-1">
-                    <div class="flex flex-wrap items-center gap-3 mb-4">
-                        <h2 class="text-3xl font-bold text-orange-400">My Little UI</h2>
-                        <span class="px-2 py-0.5 rounded text-xs font-semibold bg-green-900/50 text-green-300 border border-green-700/50">Client Side</span>
-                        <span class="px-2 py-0.5 rounded text-xs font-semibold bg-blue-900/50 text-blue-300 border border-blue-700/50">Server Synced</span>
-                    </div>
-                    <p class="text-zinc-300 leading-relaxed mb-4">
-                        A collection of quality-of-life interface tweaks designed to give you more information without cluttering your screen. Includes comprehensive tooltips, weather forecasts, and inventory management tools.
-                    </p>
-                    <div class="p-4 bg-zinc-950/50 rounded border border-zinc-800 text-sm text-zinc-400 flex items-start gap-2">
-                        <i data-lucide="settings" class="w-4 h-4 mt-1 flex-shrink-0"></i>
-                        <span><strong>Note:</strong> Most config values are synchronized with the server. You can tweak visual preferences using <em>Configuration Manager</em> (F1).</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- UI Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Card 1 -->
-                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-amber-500 transition-colors duration-300">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="p-2 rounded-md bg-amber-900/30 text-amber-400"><i data-lucide="clock"></i></div>
-                        <h3 class="text-xl font-bold text-zinc-100">HUD Enhancements</h3>
-                    </div>
-                    <ul class="space-y-2 text-zinc-300 text-sm">
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>In-game Clock: Moveable, shows time/day</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>Weather Forecast: Tracks rain, mist, storms</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>Wind Forecast: Shows next 5 wind directions</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>Weight & Slots: Bar above food slots</li>
-                    </ul>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-orange-500 transition-colors duration-300">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="p-2 rounded-md bg-orange-900/30 text-orange-400"><i data-lucide="hammer"></i></div>
-                        <h3 class="text-xl font-bold text-zinc-100">Crafting & Items</h3>
-                    </div>
-                    <ul class="space-y-2 text-zinc-300 text-sm">
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></div>Multicraft support (Gamepad & Mouse)</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></div>Crafting list filters & sorting</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></div>Resource requirement counts in inventory</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></div>Colored durability bars</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></div>Quick repair: Hold 'Use' to repair all</li>
-                    </ul>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-blue-500 transition-colors duration-300">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="p-2 rounded-md bg-blue-900/30 text-blue-400"><i data-lucide="info"></i></div>
-                        <h3 class="text-xl font-bold text-zinc-100">Smart Tooltips</h3>
-                    </div>
-                    <ul class="space-y-2 text-zinc-300 text-sm">
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></div>Fermenter: Time remaining, percent done</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></div>Plants: Time to full growth</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></div>Smelters/Kilns: Queue info & time to finish</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></div>Tames: Growth time, hunger status</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></div>Combined Armor & Status Effect stats</li>
-                    </ul>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-emerald-500 transition-colors duration-300">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="p-2 rounded-md bg-emerald-900/30 text-emerald-400"><i data-lucide="box"></i></div>
-                        <h3 class="text-xl font-bold text-zinc-100">Storage Management</h3>
-                    </div>
-                    <ul class="space-y-2 text-zinc-300 text-sm">
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></div>Custom Chest Names</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></div>Show chest contents on hover</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></div>Toggle free slots vs item count</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></div>Fast filtering in chests</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Server Content -->
-        <div id="content-server" class="hidden">
-            <!-- Header Section -->
-            <div class="mb-12 bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                    <div>
-                        <div class="flex items-center gap-3 mb-2">
-                            <h2 class="text-3xl font-bold text-purple-400">Serverside QoL</h2>
-                            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-purple-900/50 text-purple-300 border border-purple-700/50">Server Only</span>
-                        </div>
-                        <p class="text-zinc-400">Powerful backend tweaks that run entirely on the server.</p>
-                    </div>
-                    <div class="flex items-center gap-2 bg-emerald-900/20 px-4 py-2 rounded-lg border border-emerald-900/50">
-                        <i data-lucide="gamepad-2" class="text-emerald-400 w-5 h-5"></i>
-                        <span class="text-emerald-200 font-medium text-sm">Xbox & Vanilla Compatible</span>
-                    </div>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div class="bg-zinc-950/50 p-4 rounded border border-zinc-800">
-                        <strong class="text-zinc-200 block mb-1">Crossplay Friendly</strong>
-                        <span class="text-zinc-400">Designed for dedicated servers with mixed PC/Xbox players.</span>
-                    </div>
-                    <div class="bg-zinc-950/50 p-4 rounded border border-zinc-800">
-                        <strong class="text-zinc-200 block mb-1">Performance</strong>
-                        <span class="text-zinc-400">Fixes ownership issues for smelters/cooking on bad connections.</span>
-                    </div>
-                    <div class="bg-zinc-950/50 p-4 rounded border border-zinc-800">
-                        <strong class="text-zinc-200 block mb-1">Admin Room</strong>
-                        <span class="text-zinc-400">Includes an in-game room for admins to toggle features via signs.</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Server Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Card 1 -->
-                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-purple-500 transition-colors duration-300">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="p-2 rounded-md bg-purple-900/30 text-purple-400"><i data-lucide="map"></i></div>
-                        <h3 class="text-xl font-bold text-zinc-100">World & Travel</h3>
-                    </div>
-                    <ul class="space-y-2 text-zinc-300 text-sm">
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0"></div>Auto-generated Portal Hub</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0"></div>Map Pins for Portals and Ships (Auto-updating)</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0"></div>Unlock Traders (removes progression lock)</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0"></div>Mist removal in Mistlands (Configurable)</li>
-                    </ul>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-cyan-500 transition-colors duration-300">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="p-2 rounded-md bg-cyan-900/30 text-cyan-400"><i data-lucide="cpu"></i></div>
-                        <h3 class="text-xl font-bold text-zinc-100">Base Automation</h3>
-                    </div>
-                    <ul class="space-y-2 text-zinc-300 text-sm">
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></div>Auto-sort inventories into nearby containers</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></div>Auto-pickup dropped items into chests</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></div>Smelters/Kilns pull fuel/ore from nearby chests</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></div>Crafting Stations: Extended range & extensions</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></div>Doors auto-close after use</li>
-                    </ul>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-rose-500 transition-colors duration-300">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="p-2 rounded-md bg-rose-900/30 text-rose-400"><i data-lucide="dog"></i></div>
-                        <h3 class="text-xl font-bold text-zinc-100">Tames & Creatures</h3>
-                    </div>
-                    <ul class="space-y-2 text-zinc-300 text-sm">
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-500 flex-shrink-0"></div>Commandable Tames (Like wolves)</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-500 flex-shrink-0"></div>Teleport following tames with you</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-500 flex-shrink-0"></div>Tames are always fed (Never hungry)</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-500 flex-shrink-0"></div>Show taming/growing progress to nearby players</li>
-                    </ul>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="bg-zinc-900 border border-zinc-700 rounded-lg p-5 shadow-lg hover:border-amber-500 transition-colors duration-300">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="p-2 rounded-md bg-amber-900/30 text-amber-400"><i data-lucide="flame"></i></div>
-                        <h3 class="text-xl font-bold text-zinc-100">Quality of Life</h3>
-                    </div>
-                    <ul class="space-y-2 text-zinc-300 text-sm">
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>Infinite Fuel for fireplaces/torches</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>Torches/Fires ignore rain</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>Infinite Stamina (Building/Farming modes)</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>Assignable ownership for interactables</li>
-                        <li class="flex items-start gap-2"><div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0"></div>In-world config room for Admins</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="mt-8 text-center">
-                <p class="text-zinc-500 text-sm">
-                    * Features marked here are available but depend on the server admin's specific configuration.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Initialize Icons
-        lucide.createIcons();
-
-        // Clipboard Logic
-        function copyIP() {
-            navigator.clipboard.writeText("198.73.57.143:27029");
-            const toast = document.getElementById('copy-toast');
-            
-            // Show toast
-            toast.classList.remove('-translate-y-32', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-            
-            // Hide toast after 2 seconds
-            setTimeout(() => {
-                toast.classList.add('-translate-y-32', 'opacity-0');
-                toast.classList.remove('translate-y-0', 'opacity-100');
-            }, 2500);
-        }
-
-        // Tab Switching Logic
-        function switchTab(tab) {
-            const uiContent = document.getElementById('content-ui');
-            const serverContent = document.getElementById('content-server');
-            const uiBtn = document.getElementById('tab-btn-ui');
-            const serverBtn = document.getElementById('tab-btn-server');
-
-            if (tab === 'ui') {
-                uiContent.classList.remove('hidden');
-                uiContent.classList.add('fade-in');
-                serverContent.classList.add('hidden');
-                
-                // Active Styles
-                uiBtn.className = "flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 font-bold bg-orange-600 text-white shadow-lg shadow-orange-900/20";
-                serverBtn.className = "flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 font-bold text-zinc-400 hover:text-white hover:bg-zinc-800";
-            } else {
-                serverContent.classList.remove('hidden');
-                serverContent.classList.add('fade-in');
-                uiContent.classList.add('hidden');
-
-                // Active Styles
-                serverBtn.className = "flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 font-bold bg-purple-600 text-white shadow-lg shadow-purple-900/20";
-                uiBtn.className = "flex-1 flex items-center justify-center gap-2 py-4 rounded-lg transition-all duration-300 font-bold text-zinc-400 hover:text-white hover:bg-zinc-800";
-            }
-        }
-    </script>
-</body>
-</html>
+export default ValheimServerPage;
